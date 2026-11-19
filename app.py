@@ -194,6 +194,10 @@ def logout():
 @student_required
 def dashboard():
     stu = q("SELECT * FROM students WHERE id=?", (session["uid"],), one=True)
+    if not stu:
+        session.clear()
+        flash("Session expired. Log in again.")
+        return redirect(url_for("login"))
     return render_template("dashboard.html", stu=stu, rep=student_report(stu))
 
 
@@ -201,6 +205,9 @@ def dashboard():
 @student_required
 def api_me():
     stu = q("SELECT * FROM students WHERE id=?", (session["uid"],), one=True)
+    if not stu:
+        session.clear()
+        return jsonify(result="denied", message="Session expired"), 401
     return jsonify(student_report(stu))
 
 
