@@ -1,0 +1,36 @@
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,Segoe UI,Arial,sans-serif;background:#f4f6f9;color:#1d2433}
+nav{background:#7a1020;color:#fff;display:flex;gap:6px;align-items:center;padding:10px 18px;flex-wrap:wrap}
+nav b{margin-right:14px}
+nav a{color:#fff;text-decoration:none;padding:6px 10px;border-radius:6px}
+nav a:hover{background:rgba(255,255,255,.18)}
+nav .sp{flex:1}
+main{max-width:1000px;margin:22px auto;padding:0 16px}
+.card{background:#fff;border-radius:10px;padding:18px;box-shadow:0 1px 4px rgba(0,0,0,.08);margin-bottom:18px}
+h1,h2{margin-top:0}
+label{display:block;margin:10px 0 4px;font-weight:600}
+input,select,button{font:inherit;padding:8px 10px;border:1px solid #c4cad6;border-radius:6px}
+button{background:#7a1020;color:#fff;border:0;cursor:pointer}
+button.alt{background:#4b5568}
+button.sm{padding:4px 10px}
+button:disabled{opacity:.5}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:8px;border-bottom:1px solid #e3e7ee}
+th{background:#f0f2f6}
+.flash{background:#fff3cd;border:1px solid #e6cf7a;padding:10px;border-radius:6px;margin-bottom:12px}
+.badge{display:inline-block;padding:3px 10px;border-radius:12px;font-weight:700;color:#fff}
+.Safe,.Present,.enrolled{background:#1f8a4c}
+.Warning,.Late{background:#d98a00}
+.Drop,.Absent{background:#c62828}
+.Excused,.Pending{background:#5c6bc0}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:end}
+.kiosk{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:800px){.kiosk{grid-template-columns:1fr}}
+#reader{width:100%;min-height:260px;background:#000;border-radius:8px;overflow:hidden}
+#result{min-height:120px;border-radius:10px;padding:16px;font-size:1.3rem;font-weight:700;color:#fff;background:#4b5568;text-align:center}
+#result.ok{background:#1f8a4c}#result.late{background:#d98a00}#result.err{background:#c62828}
+#result small{display:block;font-weight:400;font-size:.95rem;margin-top:6px}
+.modes button{background:#c4cad6;color:#1d2433}
+.modes button.on{background:#7a1020;color:#fff}
+.muted{color:#6b7385}
+ul#log{padding-left:18px;max-height:200px;overflow:auto;margin:6px 0 0}

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="card" style="max-width:420px;margin:40px auto">
+  <h1>Student registration</h1>
+  <form method="post">
+    <label>TUPM ID</label>
+    <input name="tupm_id" placeholder="TUPM-25-0389" pattern="TUPM-[0-9]{2}-[0-9]{4}" required style="width:100%">
+    <label>Full name</label>
+    <input name="full_name" style="width:100%">
+    <label>Password (6+ characters)</label>
+    <input name="password" type="password" minlength="6" required style="width:100%">
+    <p><button>Register</button> <a href="/login">Back</a></p>
+  </form>
+  <p class="muted">Your ID must be enrolled by an admin first.</p>
+</div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="card">
+  <h1>Enroll a student</h1>
+  <div class="row">
+    <div><label>TUPM ID</label><input id="n_id" placeholder="TUPM-25-0389" pattern="TUPM-[0-9]{2}-[0-9]{4}"></div>
+    <div><label>Full name (optional)</label><input id="n_name"></div>
+    <button onclick="api('POST','/api/students',{tupm_id:n_id.value,full_name:n_name.value})">Enroll</button>
+  </div>
+  <p class="muted">Or use Enroll mode on the Kiosk and scan the ID.</p>
+</div>
+<div class="card">
+  <h2>Students</h2>
+  <table>
+    <tr><th>ID</th><th>Name</th><th>Enrolled</th><th>Portal</th><th>Absences</th><th>Lates</th><th>Status</th></tr>
+    {% for r in rows %}
+    <tr><td>{{ r.s.tupm_id }}</td><td>{{ r.s.full_name or '' }}</td>
+      <td>{{ 'Yes' if r.s.enrolled else 'No' }}</td>
+      <td>{{ 'Registered' if r.s.password_hash else '-' }}</td>
+      <td>{{ r.absent }}</td><td>{{ r.late }}</td>
+      <td>{% if r.level != '-' %}<span class="badge {{ r.level }}">{{ r.level }}</span>{% endif %}</td></tr>
+    {% else %}<tr><td colspan="7" class="muted">No students yet.</td></tr>{% endfor %}
+  </table>
+</div>
+{% endblock %}

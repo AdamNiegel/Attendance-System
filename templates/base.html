@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{% block title %}QR Attendance{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head><body>
+<nav>
+  <b>TUPM QR Attendance</b>
+  {% if role == 'admin' %}
+    <a href="/kiosk">Kiosk</a><a href="/admin/sessions">Sessions</a>
+    <a href="/admin/attendance">Attendance</a><a href="/admin/students">Students</a>
+  {% elif role == 'student' %}
+    <a href="/dashboard">Dashboard</a>
+  {% endif %}
+  <span class="sp"></span>
+  {% if role %}<span>{{ who }}</span><a href="/logout">Logout</a>{% endif %}
+</nav>
+<main>
+{% with msgs = get_flashed_messages() %}{% for m in msgs %}<div class="flash">{{ m }}</div>{% endfor %}{% endwith %}
+{% block body %}{% endblock %}
+</main>
+<script src="{{ url_for('static', filename='admin.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body></html>

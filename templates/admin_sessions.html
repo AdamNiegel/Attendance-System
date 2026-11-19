@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="card">
+  <h1>Open a session</h1>
+  <div class="row">
+    <div><label>Date</label><input type="date" id="s_date" value="{{ today }}"></div>
+    <div><label>Start time</label><input type="time" id="s_time" value="{{ now }}"></div>
+    <div><label>Late after (minutes)</label><input type="number" id="s_late" value="15" min="0" max="600"></div>
+    <button onclick="openSession()">Open session</button>
+  </div>
+  <p class="muted">Scans count only while a session is open. Close it to mark non-scanners Absent.</p>
+</div>
+<div class="card">
+  <h2>Sessions</h2>
+  <table>
+    <tr><th>Date</th><th>Start</th><th>Late after</th><th>State</th><th></th></tr>
+    {% for s in rows %}
+    <tr><td>{{ s.session_date }}</td><td>{{ s.start_time }}</td><td>{{ s.late_after_minutes }} min</td>
+      <td>{{ 'Open' if s.is_open else 'Closed' }}</td>
+      <td>{% if s.is_open %}<button class="sm" onclick="api('POST','/api/sessions/{{ s.id }}/close')">Close</button>
+          {% else %}<button class="sm alt" onclick="api('POST','/api/sessions/{{ s.id }}/open')">Reopen</button>{% endif %}
+          <a href="/admin/attendance?session={{ s.id }}">View</a></td></tr>
+    {% else %}<tr><td colspan="5" class="muted">No sessions yet.</td></tr>{% endfor %}
+  </table>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+function openSession(){
+  api('POST','/api/sessions',{session_date:s_date.value,start_time:s_time.value,late_after_minutes:s_late.value});
+}
+</script>
+{% endblock %}

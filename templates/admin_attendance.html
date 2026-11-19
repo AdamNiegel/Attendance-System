@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="card">
+  <h1>Attendance</h1>
+  {% if cur %}
+  <label>Session</label>
+  <select onchange="location='/admin/attendance?session='+this.value">
+    {% for s in sessions %}<option value="{{ s.id }}" {{ 'selected' if s.id == cur.id }}>{{ s.session_date }} {{ s.start_time }} ({{ 'open' if s.is_open else 'closed' }})</option>{% endfor %}
+  </select>
+  {% else %}<p class="muted">No sessions yet.</p>{% endif %}
+</div>
+{% if cur %}
+<div class="card">
+  <table>
+    <tr><th>ID</th><th>Name</th><th>Status</th><th>Scanned</th><th>Edited by</th><th>Note</th><th></th></tr>
+    {% for r in rows %}
+    <tr>
+      <td>{{ r.stu.tupm_id }}</td><td>{{ r.stu.full_name or '' }}</td>
+      <td><select id="st{{ r.stu.id }}">
+        {% if r.status == 'Pending' %}<option value="" selected disabled>Pending</option>{% endif %}
+        {% for s in statuses %}<option {{ 'selected' if s == r.status }}>{{ s }}</option>{% endfor %}
+      </select></td>
+      <td>{{ r.a.scanned_at if r.a and r.a.scanned_at else '-' }}</td>
+      <td>{{ r.a.edited_by if r.a and r.a.edited_by else '' }}</td>
+      <td><input id="nt{{ r.stu.id }}" value="{{ r.a.note if r.a and r.a.note else '' }}" style="width:150px"></td>
+      <td><button class="sm" onclick="saveAtt({{ r.stu.id }},{{ cur.id }})">Save</button></td>
+    </tr>
+    {% else %}<tr><td colspan="7" class="muted">No enrolled students.</td></tr>{% endfor %}
+  </table>
+</div>
+{% endif %}
+{% endblock %}
+{% block scripts %}
+<script>
+function saveAtt(stu, ses){
+  const st = document.getElementById('st'+stu).value;
+  if(!st){alert('Pick a status');return;}
+  api('PATCH','/api/attendance',{student_id:stu,session_id:ses,status:st,note:document.getElementById('nt'+stu).value});
+}
+</script>
+{% endblock %}

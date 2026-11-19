@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="card">
+  <h1>{{ stu.full_name or stu.tupm_id }}</h1>
+  <p>{{ stu.tupm_id }}</p>
+  <p>Status: <span class="badge {{ rep.level }}">{{ rep.level }}</span></p>
+  <p>Absences: <b>{{ rep.absent }}</b> / 3 &nbsp; Lates: <b>{{ rep.late }}</b> / 6</p>
+</div>
+<div class="card">
+  <h2>My records</h2>
+  <table>
+    <tr><th>Date</th><th>Start</th><th>Status</th><th>Scanned</th><th>Note</th></tr>
+    {% for r in rep.rows %}
+    <tr><td>{{ r.date }}</td><td>{{ r.start }}</td>
+      <td><span class="badge {{ r.status }}">{{ r.status }}</span></td>
+      <td>{{ r.scanned_at or '-' }}</td><td>{{ r.note or '' }}</td></tr>
+    {% else %}<tr><td colspan="5" class="muted">No sessions yet.</td></tr>{% endfor %}
+  </table>
+</div>
+{% endblock %}

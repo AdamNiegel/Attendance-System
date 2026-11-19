@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="kiosk">
+  <div class="card">
+    <h2>Scanner</h2>
+    <div class="row modes" style="margin-bottom:10px">
+      <button id="m_att" class="on" onclick="setMode('attendance')">Attendance</button>
+      <button id="m_enr" onclick="setMode('enroll')">Enroll</button>
+      <select id="cams"></select>
+    </div>
+    <div id="reader"></div>
+    <p class="muted" id="camStatus">Starting camera...</p>
+  </div>
+  <div>
+    <div class="card">
+      <div id="result">Scan your ID</div>
+    </div>
+    <div class="card">
+      <div class="row">
+        <button onclick="connectArduino()">Connect Arduino</button>
+        <span id="hw" class="muted">Hardware not connected</span>
+      </div>
+      <label>Manual ID entry (backup)</label>
+      <div class="row">
+        <input id="manual" placeholder="TUPM-25-0389" style="flex:1">
+        <button class="alt" onclick="handleId(document.getElementById('manual').value,true)">Submit</button>
+      </div>
+      <h3>Recent</h3>
+      <ul id="log"></ul>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='html5-qrcode.min.js') }}"></script>
+<script src="{{ url_for('static', filename='serial.js') }}"></script>
+<script src="{{ url_for('static', filename='scanner.js') }}"></script>
+{% endblock %}
