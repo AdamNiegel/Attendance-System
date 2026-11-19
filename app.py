@@ -1,4 +1,9 @@
+import os, time
+os.environ["TZ"] = "Asia/Manila"
+if hasattr(time, "tzset"): time.tzset()
+
 import os, re, sqlite3, secrets
+
 from datetime import datetime, timedelta, date
 from functools import wraps
 from flask import (Flask, g, render_template, request, redirect, url_for,
